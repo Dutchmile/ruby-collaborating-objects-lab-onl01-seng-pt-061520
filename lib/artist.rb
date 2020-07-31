@@ -1,29 +1,28 @@
 require 'pry'
 class Artist
-
   attr_accessor :name, :songs
-
-  @@all = []
+  @@all = []  #stores all instances of Artist 
 
   def initialize(name)
     @name = name
     @songs = []
-    save
-  end
-
-  def save
-    @@all << self
-  end
-
-  def self.all
-    @@all
   end
 
   def add_song(song)
-    @songs << song
+    self.songs << song    #Artist.songs reader returns all songs 
+                          #stored in @songs
   end
 
-  def self.find_or_create_by_name(name)   #class method uses find/create class
+  def save
+    @@all << self     #saves all created instances of Artist class in 
+                      #@@all class variable
+  end
+
+  def self.all      #class method all returns all instances of Artist class 
+    @@all
+  end
+
+  def self.find_or_create_by_name(name)   #class method uses find/create class 
                                           #methods to detect or create instances
     if self.find(name)
       self.find(name)
@@ -42,9 +41,7 @@ class Artist
     artist
   end
 
-  def print_songs
-    song_list = []
-    self.songs.collect {|song| song_list << song.name}
-    puts song_list
+  def print_songs #instance method iterates through @songs of an instance of Artist
+    self.songs.each {|song| song.name}
   end
 end
